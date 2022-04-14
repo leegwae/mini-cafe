@@ -8,5 +8,8 @@ class UserType(models.TextChoices):
 
 
 class User(AbstractUser):
-    user_type = models.CharField(max_length=30, choices=UserType.choices, default=UserType.MEMBER, verbose_name='유저타입')
+    user_type = models.CharField(max_length=30, choices=UserType.choices, default=UserType.MEMBER)
     coffee_point = models.PositiveIntegerField(default=10000)
+
+    class Meta:
+        ordering = ['-id']

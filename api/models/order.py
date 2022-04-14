@@ -11,10 +11,14 @@ class Order(models.Model):
     # user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
     menu = models.ForeignKey(menu.Menu, on_delete=models.SET_NULL)
     count = models.PositiveIntegerField(default=1)
+    is_done = models.BooleanField(default=False)
 
     @property
     def amount(self):
         return self.menu.price * self.count
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.user.username + ":" + str(self.created_at)
@@ -26,4 +30,4 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('url', 'user', 'menu', 'count', 'amount', 'created_at')
+        fields = ('url', 'pk', 'user', 'menu', 'count', 'amount', 'created_at', 'is_done')

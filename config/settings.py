@@ -89,6 +89,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+# WARNING! DISABLED FOR TEST!
 
 AUTH_PASSWORD_VALIDATORS = [
     # {
@@ -140,3 +141,17 @@ CUSTOM SETTINGS
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Celery Settings
+CELERY_BROKER_URL = 'redis://localhost:6379/'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Seoul'
+
+# Rest Framework Settings
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5,
+}

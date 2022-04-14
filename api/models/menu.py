@@ -7,10 +7,13 @@ class MenuType(models.TextChoices):
 
 
 class Menu(models.Model):
-    name = models.CharField(max_length=30, unique=True, verbose_name='메뉴',
+    name = models.CharField(max_length=30, unique=True,
                             choices=MenuType.choices, default=MenuType.COFFEE)
     price = models.PositiveIntegerField(default=3000)
     stock = models.PositiveIntegerField(default=20)
+
+    class Meta:
+        ordering = ['-stock']
 
     def __str__(self):
         return self.name
