@@ -1,0 +1,152 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: sans-serif;
+  color: #2c2c2c;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+body {
+  background-color: #fafafa;
+  width: 80%;
+  max-width: 900px;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form{
+    width: 300px;
+    font-size: 1.2rem;
+}
+
+input{
+  margin-bottom: 1.6rem;
+  padding: 5px;
+}
+
+.helptext{
+  display: none;
+}
+
+button{
+    margin-top: 2rem;
+    padding: 5 20 5 20px;
+    width: 100%;
+}
+
+header {
+  text-align: center;
+  margin: 4rem 0 1rem 0;
+}
+
+header .title {
+  font-size: 2.7rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+header ul {
+  width: 35%;
+  margin: auto;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+header ul li {
+  text-align: center;
+  padding: 0.5rem;
+  -webkit-transition: all ease-in-out .2s;
+  transition: all ease-in-out .2s;
+  border-bottom: 2px solid transparent;
+  margin: 5px;
+}
+
+header ul li:hover {
+  border-bottom: 2px solid #2c2c2c;
+}
+
+header ul li.activate {
+  border-bottom: 2px solid #2c2c2c;
+}
+
+.card {
+  max-width: 700px;
+  margin: 0 auto 4rem auto;
+}
+
+.card .admin {
+  float: right;
+}
+
+.card .admin > * {
+  font-size: .9rem;
+  margin: .3rem;
+  padding: .5rem;
+}
+
+.card .date {
+  font-weight: normal;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.card .contents {
+  margin: 1.5rem 0rem;
+  border: 0.3px solid #eceaea;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 1.7rem;
+  padding-bottom: 1rem;
+}
+
+.card .contents .date {
+  margin: 1rem 0;
+}
+
+.comments {
+  width: 95%;
+  margin: auto;
+}
+
+.comments .text {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.comments .text .head {
+  margin-bottom: 5px;
+}
+
+.comments .text .head .author {
+  font-weight: 600;
+}

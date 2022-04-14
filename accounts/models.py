@@ -2,10 +2,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class User(AbstractUser):
-    USER_TYPE_CHOICES = (
-        (1, 'member'),
-        (2, 'barista'),
-    )
+class UserType(models.TextChoices):
+    MEMBER = ('member', '일반멤버')
+    BARISTA = ('barista', '바리스타')
 
-    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
+
+class User(AbstractUser):
+    user_type = models.CharField(max_length=30, choices=UserType.choices, default=UserType.MEMBER, verbose_name='유저타입')
