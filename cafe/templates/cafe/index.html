@@ -1,0 +1,22 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'style/base.css' %}">
+<header>
+    <ul>
+        {% if not user.is_authenticated %}
+        <a href="{% url 'accounts:signup' %}"><li>회원가입</li></a>
+        <a href="{% url 'accounts:login' %}"><li>로그인</li></a>
+        {% elif user.user_type == "barista" %}
+        <li>재고주문</li>
+        <a href="{% url 'accounts:logout' %}"><li>로그아웃</li></a>
+        {% else %}
+        <li>주문하기</li>
+        <a href="{% url 'accounts:logout' %}"><li>로그아웃</li></a>
+        {% endif %}
+    </ul>
+</header>
+
+<div class="card" style="font-size: 1rem";>
+    <p>현재,</p>
+    <p><span class="number">10</span> 컵의 커피가 남아있습니다.</p>
+    <p><span class="number">148</span> 번 커피봇이 주문을 받았습니다.</p>
+</div>
