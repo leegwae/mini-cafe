@@ -1,9 +1,5 @@
-import random
-import time
-
-from celery import shared_task
 from django.db import transaction, DatabaseError
-from django.shortcuts import get_object_or_404
+from django.http import Http404
 from rest_framework import viewsets, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
@@ -11,6 +7,8 @@ from rest_framework.response import Response
 
 from accounts.models import User
 from .models import menu, order, user
+from .models.menu import Menu
+from .tasks import order_in_progress
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -36,18 +34,19 @@ class OrderViewSet(viewsets.ModelViewSet):
             with transaction.atomic():
                 count = int(request.data['count'])
                 # 재고 차감
-                menu_obj = get_object_or_404(menu.Menu, name=request.data['menu'])
-                if count <= menu_obj.stock:
-                    menu_obj.stock -= count
-                else:
+                try:
+                    menu_obj = menu.Menu.objects.select_for_update(of=('self')).get(name=request.data['menu'])
+                except Menu.DoesNotExist:
+                    return Http404()
+                if count > menu_obj.stock:
                     raise ValidationError(detail="재고가 부족합니다", code="no_stocks")
+                menu_obj.stock -= count
                 menu_obj.save()
                 # 포인트 차감
-                user_obj = request.user
-                if count * menu_obj.price <= user_obj.coffee_point:
-                    user_obj.coffee_point -= (count * menu_obj.price)
-                else:
+                user_obj = User.objects.select_for_update(of=('self')).get(id=request.user.id)
+                if count * menu_obj.price > user_obj.coffee_point:
                     raise ValidationError(detail="유저 포인트가 부족합니다", code="no_points")
+                user_obj.coffee_point -= (count * menu_obj.price)
                 user_obj.save()
                 # 주문 저장
                 self.perform_create(serializer)
@@ -64,13 +63,3 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
-
-@shared_task
-def order_in_progress(order_dic):
-    # 주문 개수만큼 시간 늘어남
-    time.sleep(order_dic['count'] * random.randrange(1, 3))
-    # 주문 완료 표시
-    order_obj = order.Order.objects.get(pk=order_dic['pk'])
-    order_obj.is_done = True
-    order_obj.save()
-
