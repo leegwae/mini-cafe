@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import Menu
+from api.models.menu import Menu
 
 admin.site.register(Menu)
