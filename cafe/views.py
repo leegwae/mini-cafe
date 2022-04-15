@@ -5,7 +5,10 @@ from api.models import menu, order
 
 
 def index(request):
-    coffee_stock = menu.Menu.objects.get(name=menu.MenuType.COFFEE).stock
+    try:
+        coffee_stock = menu.Menu.objects.get(name=menu.MenuType.COFFEE).stock
+    except menu.Menu.DoesNotExist:
+        coffee_stock = 0
     total_order = order.Order.objects.count()
     context = {
         'coffee_stock': coffee_stock,
