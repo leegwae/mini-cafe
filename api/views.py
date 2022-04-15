@@ -30,22 +30,25 @@ class OrderViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        # 0 개면 오류
+        count = int(request.data['count'])
+        if count <= 0:
+            raise ValidationError(detail="no_count", code="no_count")
         try:
             with transaction.atomic():
-                count = int(request.data['count'])
                 # 재고 차감
                 try:
                     menu_obj = menu.Menu.objects.select_for_update(of=('self')).get(name=request.data['menu'])
                 except Menu.DoesNotExist:
                     return Http404()
                 if count > menu_obj.stock:
-                    raise ValidationError(detail="재고가 부족합니다", code="no_stocks")
+                    raise ValidationError(detail="no_stocks", code="no_stocks")
                 menu_obj.stock -= count
                 menu_obj.save()
                 # 포인트 차감
                 user_obj = User.objects.select_for_update(of=('self')).get(id=request.user.id)
                 if count * menu_obj.price > user_obj.coffee_point:
-                    raise ValidationError(detail="유저 포인트가 부족합니다", code="no_points")
+                    raise ValidationError(detail="no_points", code="no_points")
                 user_obj.coffee_point -= (count * menu_obj.price)
                 user_obj.save()
                 # 주문 저장

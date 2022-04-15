@@ -9,7 +9,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
-    menu = models.ForeignKey(menu.Menu, on_delete=models.SET_NULL)
+    menu = models.ForeignKey(menu.Menu, on_delete=models.CASCADE)
     count = models.PositiveIntegerField(default=1)
     is_done = models.BooleanField(default=False)
 

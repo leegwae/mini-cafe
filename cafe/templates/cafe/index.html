@@ -1,5 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'style/base.css' %}">
+
+<!-- 헤더 -->
 <header>
     <ul>
         {% if not user.is_authenticated %}
@@ -9,14 +11,22 @@
         <li>재고주문</li>
         <a href="{% url 'accounts:logout' %}"><li>로그아웃</li></a>
         {% else %}
-        <li>주문하기</li>
+        <a href="{% url 'cafe:bot' %}"><li>주문하기</li></a>
         <a href="{% url 'accounts:logout' %}"><li>로그아웃</li></a>
         {% endif %}
     </ul>
 </header>
 
-<div class="card" style="font-size: 1rem";>
-    <p>현재,</p>
-    <p><span class="number">10</span> 컵의 커피가 남아있습니다.</p>
-    <p><span class="number">148</span> 번 커피봇이 주문을 받았습니다.</p>
+<!-- 내용 -->
+<div class="card" style="font-size: 1.5rem;";>
+    <p>현재 <span style="color: sienna; font-weight: bold">{{ coffee_stock }}</span> 컵의 커피가 남아있습니다.</p>
+    <br>
+    <p>커피봇이 총 <span style="color: cornflowerblue; font-weight: bold">{{ total_order }}</span> 번 주문을 받았습니다.</p>
 </div>
+
+
+<!-- 스크립트 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+
+</script>

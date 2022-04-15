@@ -139,7 +139,7 @@ CUSTOM SETTINGS
 
 # Django User Auth
 AUTH_USER_MODEL = 'accounts.User'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/bot/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Celery Settings

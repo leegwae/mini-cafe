@@ -54,7 +54,7 @@ input{
   display: none;
 }
 
-button{
+form > button{
     margin-top: 2rem;
     padding: 5 20 5 20px;
     width: 100%;
@@ -119,16 +119,16 @@ header ul li:hover {
   color: rgba(0, 0, 0, 0.5);
 }
 
-.card .contents {
+.contents {
   margin: 1.5rem 0rem;
-  border: 0.3px solid #eceaea;
+  border: 3px solid lavender;
   border-radius: 5px;
   background-color: #fff;
   padding: 1.7rem;
   padding-bottom: 1rem;
 }
 
-.card .contents .date {
+.contents .date {
   margin: 1rem 0;
 }
 
@@ -148,4 +148,18 @@ header ul li:hover {
 
 .comments .text .head .author {
   font-weight: 600;
+}
+
+#chat{
+  width: 90%;
+  max-width: 500px;
+  height: 600px;
+}
+
+#chat > p{
+  margin: 1rem 0 1rem 0;
+}
+
+#chat span{
+  margin: 0 3 0 3px;
 }

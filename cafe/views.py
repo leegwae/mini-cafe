@@ -1,5 +1,21 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+
+from api.models import menu, order
 
 
 def index(request):
-    return render(request, 'cafe/index.html')
+    coffee_stock = menu.Menu.objects.get(name=menu.MenuType.COFFEE).stock
+    total_order = order.Order.objects.count()
+    context = {
+        'coffee_stock': coffee_stock,
+        'total_order': total_order
+    }
+    return render(request, 'cafe/index.html', context)
+
+
+@login_required
+def bot(request):
+    menus = menu.Menu.objects.all()
+    menu_name = [m.get_name_display() for m in menus]
+    return render(request, 'cafe/bot.html', {'menus':menu_name})
