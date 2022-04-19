@@ -1,81 +1,35 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style/base.css' %}">
+{% extends "base.html" %}
 
-<!-- 헤더 -->
-<header>
-    <ul>
-        {% if not user.is_authenticated %}
-        <a href="{% url 'accounts:signup' %}"><li>회원가입</li></a>
-        <a href="{% url 'accounts:login' %}"><li>로그인</li></a>
-        {% else %}
-        <a href="{% url 'cafe:index' %}"><li>돌아가기</li></a>
-        <a href="{% url 'accounts:logout' %}"><li>로그아웃</li></a>
-        {% endif %}
-    </ul>
-</header>
+{% block body %}
+<div class="wrapper">
+    <div class="bot" id="shadow">
+        <div class="contents">
+            <div>
+                <p><span>다래</span>님 안녕하세요! 😀</p>
+                <p>새로 주문을 하시겠어요?
+                    <span class="button">메뉴보기</span>
+                    <span class="button">포인트보기</span>
+                </p>
+            </div>
+            <div class="order">
+                <p id="1">아메리카노 <span>0</span>잔 <span class="button plus">+</span><span class="button minus">-</span></p>
+                <p id="2">카페라떼 <span>0</span>잔 <span class="button plus">+</span><span class="button minus">-</span></p>
+                <p id="total">총 <span>0</span>잔 <span class="button">주문하기</span><span class="button">취소하기</span></p>
+            </div>
+            <div>
+                <p>이런, 지금은 커피 피크타임💦입니다.</p>
+                <p><span>다래</span>님의 주문이 완료될때까지 <span>12</span>분 남았습니다.</p>
+                <p>기다리시겠어요?
+                    <span class="button">기다리기</span>
+                    <span class="button">취소하기</span>
+                </p>
+            </div>
+        </div>
+    </div>
 
-<!-- 내용 -->
-<div class="contents" id="chat">
-    <p>안녕하세요 <span>{{ request.user.nickname }}</span>님!</p>
-    <!--<p>주문을 하시겠습니까? <button >주문하기</button> </p>-->
-    <div style="border-bottom: 1px solid black; border-top: 1px solid black; padding: 10px;">
-    {% for name in menus %}
-        <p id="menu">
-            <span>{{ name }}</span>
-            <button id="up" style="padding: 0 4 0 4">+</button>
-            <button id="down" style="padding: 0 5 0 5">-</button>
-            <span id="count">0</span> 잔
-        </p>
-    {% endfor %}
-    <button id="order" type="submit">확인</button>
+    <div class="menu">
+        <a href="#" class="button first">돌아가기</a>
+        <a href="#" class="button second">로그아웃</a>
     </div>
 </div>
-
-<!-- 스크립트 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script>
-    var count = 0;
-
-    $('#order').click(()=>{
-        var csrftoken = readCookie('csrftoken');
-        if(count <= 0) return;
-         $.ajax({
-            type: "POST",
-            url: "{% url 'order-list' %}",
-            data: {'menu':'coffee','count':count },
-            headers:{"X-CSRFToken": csrftoken },
-            success: function (newEnd) {
-                $('#chat').append('<p>'+"주문이 성공했습니다!"+'</p>')
-            },
-            error: function (err) {
-                console.log(err['responseJSON'][0].toString())
-                if(err['responseJSON'][0].toString() === 'no_points'){
-                    $('#chat').append('<p>'+"유저포인트가 부족합니다"+'</p>')
-                }
-                else if(err['responseJSON'][0].toString() === 'no_stocks'){
-                    $('#chat').append('<p>'+"재고가 부족합니다"+'</p>')
-                }
-            }
-        });
-    })
-
-    $('#up').click(() => {
-        count++;
-        $('#count').html(count);
-    })
-    $('#down').click(() => {
-        if(count > 0) count --;
-        $('#count').html(count);
-    })
-
-    function readCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-        }
-        return null;
-    }
-</script>
+{% endblock %}
