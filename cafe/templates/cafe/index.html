@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "cafe/base.html" %}
 
 {% block body %}
 <div class="wrapper">
@@ -8,8 +8,16 @@
     </div>
 
     <div class="menu">
-        <a href="#" class="button first">로그인</a>
-        <a href="#" class="button second">회원가입</a>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'accounts:login' %}" class="button first">로그인</a>
+            <a href="{% url 'accounts:signup' %}" class="button second">회원가입</a>
+        {% elif user.user_type == 'barista' %}
+            <a href="#" class="button first">재고확인</a>
+            <a href="{% url 'accounts:logout' %}" class="button second">로그아웃</a>
+        {% else %}
+            <a href="{% url 'cafe:bot' %}" class="button first">주문하기</a>
+            <a href="{% url 'accounts:logout' %}" class="button second">로그아웃</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미니카페: Mini Cafe</title>
+    <link rel="stylesheet" href="style/base.css">
+</head>
+<body>
+  <div class="wrapper">
+    <form id="shadow" method="post" action="/accounts/signup/">
+      <h2 class="form-title">회원가입</h2>
+      <div class="form-input">
+        <input type="hidden" name="csrfmiddlewaretoken" value="b8XANqRH1HR9WhsibvFZ15SueEGhLraP529vJOoNzgAyZkDBffnjdBRbZgV3XGtd">
+        <label for="id_username">사용자 이름:</label>
+        <input type="text" name="username" maxlength="150" autofocus="" required="" id="id_username">
+        <br><span class="helptext">150자 이하 문자, 숫자 그리고 @/./+/-/_만 가능합니다.</span>
+        <label for="id_nickname">닉네임:</label>
+        <input type="text" name="nickname" maxlength="10" required="" id="id_nickname">
+        <label for="id_password1">비밀번호:</label>
+        <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1">
+        <label for="id_password2">비밀번호 확인:</label>
+        <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2">
+        <br><span class="helptext">확인을 위해 이전과 동일한 비밀번호를 입력하세요. </span>
+        <label for="id_user_type">유저타입:</label>
+        <select name="user_type" id="id_user_type">
+          <option value="member" selected="">일반멤버</option>
+          <option value="barista">바리스타</option>
+        </select>
+      </div>
+      <button type="submit">회원가입</button>
+    </form>
+  </div>
+</body>
+</html>

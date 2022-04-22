@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미니카페: Mini Cafe</title>
+    <link rel="stylesheet" href="style/base.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main" id="shadow">
+            <p>현재 <span class="num" id="coffee">28</span> 컵의 커피☕가 준비되어 있습니다.</p>
+            <p>커피봇이 총 <span class="num" id="order">123</span> 번 주문을 받았습니다.</p>
+        </div>
+    
+        <div class="menu">
+            <a href="{% url 'accounts:login' %}" class="button first">로그인</a>
+            <a href="{% url 'accounts:signup' %}" class="button second">회원가입</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,8 +1,13 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style/base.css' %}">
-
-<form method="post" action="{% url 'accounts:login' %}">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">로그인</button>
-</form>
+{% extends "cafe/base.html" %}
+{% block body %}
+<div class="wrapper">
+    <form method="post" id="shadow" action="{% url 'accounts:login' %}">
+        <h2 class="form-title">로그인</h2>
+        <div class="form-input">
+            {% csrf_token %}
+            {{ form }}
+        </div>
+        <button type="submit">로그인</button>
+    </form>
+</div>
+{% endblock %}
