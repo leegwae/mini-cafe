@@ -26,3 +26,13 @@ export const getIndex = (elem) => {
   if (!elem.parentElement) return -1
   return Array.prototype.indexOf.call(elem.parentElement.children, elem)
 }
+
+export function setVisibility(element, visible) {
+  element.style.setProperty('display', visible ? 'initial' : 'none');
+}
+
+export function removeChildren(parent) {
+	while (parent.firstChild) {
+		parent.removeChild(parent.firstChild);
+	}
+}
