@@ -67,7 +67,7 @@ export default class UserOrder extends View {
 		else window.alert(`총 ${total}잔을 주문합니다.`);
 	
 		[...tg.closest('div').getElementsByClassName('button')].forEach((button) => setVisibility(button, false));
-
+		document.getElementsByTagName('order-notice')[0].setContentByTemplateKey('error2');
 	}
 	onAmountHandle = (e) => {
 		e.preventDefault();

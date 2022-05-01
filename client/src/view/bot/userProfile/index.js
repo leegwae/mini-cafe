@@ -24,10 +24,9 @@ export default class UserProfile extends View {
 
 		const tg = e.target;
 		if (tg.dataset.action !== 'toggle-content') return;
-		const orderElem = document.getElementsByTagName('user-order')[0];
 		const newContent = tg.id.split('-')[1];
 
-		orderElem.setContentByTemplateKey(newContent);
+		document.getElementsByTagName('user-order')[0].setContentByTemplateKey(newContent);
 	}
 }
 
