@@ -1,5 +1,5 @@
-import el from "../util/dom.js";
-import View from "../view/abstract.js";
+import el from "../../util/dom.js";
+import View from '../abstract.js';
 
 export default class Bot extends View {
 	static #template = `
