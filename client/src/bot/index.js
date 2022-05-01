@@ -1,7 +1,7 @@
 import el from "../util/dom.js";
 import View from "../view/abstract.js";
 
-export default class bot extends View {
+export default class Bot extends View {
 	static #template = `
 			<fragment>
 				<div>커피봇 임시</div>
@@ -10,11 +10,11 @@ export default class bot extends View {
 
 	constructor() {
 		super();
-		this.render(bot.#template);
+		this.render(Bot.#template);
 	}
 }
 
-customElements.define('bot-wrapper', bot);
+customElements.define('bot-wrapper', Bot);
 
 (() => {
 	const $bot = el('<bot-wrapper class="contents" />')
