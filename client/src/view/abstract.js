@@ -9,23 +9,14 @@ export default class View extends HTMLElement {
 		this.#addHandlers();
 	}
 
-	on(eventType, handler) {
+  on(eventType, handler) {
 		if (!this.events.has(handler)) this.events.add(handler);
-		this.addEventListener(eventType, handler);
-
-		return this;
-	}
+    this.addEventListener(eventType, handler)
+    return this;
+  }
 
 	off(eventType, handler) {
 		if (this.events.has(handler)) this.removeEventListener(eventType, handler);
-		
-		return this;
-	}
-	
-	dispatch(actionType, data=null) {
-		const event = new CustomEvent('dispatch', { detail: { actionType, data }});
-		this.dispatchEvent(event);
-
 		return this;
 	}
 
@@ -35,11 +26,23 @@ export default class View extends HTMLElement {
 		return this;
 	}
 
-	#addHandlers() {
-		if (this.handlers?.length) {
-			this.handler.forEach(([eventType, handler]) => {
-				this.on(eventType, handler);
-			})
-		}
+  #addHandlers() {
+    if (this.handlers?.length) {
+      this.handlers.forEach(([eventType, handler]) => {
+        this.on(eventType, handler)
+      })
+    }
+	}
+
+	connectedCallback() {
+		this.#addHandlers();
+	}
+
+	disconnectedCallback() {
+			if (this.handlers?.length) {
+					this.handlers.forEach(([eventType, handler]) => {
+							this.off(eventType, handler);
+					});
+			}
 	}
 }
