@@ -1,10 +1,13 @@
 import el from "../../util/dom.js";
 import View from '../abstract.js';
+import './userProfile/index.js';
+import './userOrder/index.js';
 
 export default class Bot extends View {
 	static #template = `
 			<fragment>
-				<div>커피봇 임시</div>
+				<user-profile></user-profile>
+				<user-order data-content="none"></user-order>
 			</fragment>
 	`;
 
