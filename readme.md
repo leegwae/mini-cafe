@@ -1,7 +1,7 @@
 ## 프로토타입 
 
-<img src="design/img/index.png" width="480px">
-<img src="design/img/bot.png" width="480px">
+<img src="client/img/index.png" width="480px">
+<img src="client/img/bot.png" width="480px">
 
 ## 요구사항
 
