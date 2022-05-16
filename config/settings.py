@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third party
     'rest_framework',
+    'drf_yasg',
     # custom app
     'accounts.apps.AccountsConfig',
     'cafe.apps.CafeConfig',
