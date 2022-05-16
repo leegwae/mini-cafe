@@ -1,4 +1,5 @@
 import random
+import sys
 import time
 
 from celery import shared_task
@@ -10,18 +11,20 @@ from config.params import *
 from .models import order, menu
 
 logger = get_task_logger(__name__)
+TEST = 'test' in sys.argv
 
 
 @shared_task
 def order_in_progress(order_dic):
-    logger.info("{0}번 주문 진행중...".format(order_dic['pk']))
+    logger.info("{0}번 주문 진행중...".format(order_dic['id']))
     # 주문 개수만큼 시간 늘어남
-    time.sleep(order_dic['count'] * random.randrange(MIN_SEC_TIME_PER_ORDER, MAX_SEC_TIME_PER_ORDER))
+    if not TEST:
+        time.sleep(order_dic['count'] * random.randrange(MIN_SEC_TIME_PER_ORDER, MAX_SEC_TIME_PER_ORDER))
     # 주문 완료 표시
-    order_obj = order.Order.objects.get(pk=order_dic['pk'])
+    order_obj = order.Order.objects.get(id=order_dic['id'])
     order_obj.is_done = True
     order_obj.save()
-    logger.info("{0}번 주문 완료!".format(order_dic['pk']))
+    logger.info("{0}번 주문 완료!".format(order_dic['id']))
 
 
 @shared_task

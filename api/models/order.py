@@ -30,4 +30,4 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('url', 'pk', 'user', 'menu', 'count', 'amount', 'created_at', 'is_done')
+        fields = ('url', 'id', 'user', 'menu', 'count', 'amount', 'created_at', 'is_done')
