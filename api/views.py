@@ -38,7 +38,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             with transaction.atomic():
                 # 재고 차감
                 try:
-                    menu_obj = menu.Menu.objects.select_for_update(of=('self')).get(name=request.data['menu'])
+                    menu_obj = menu.Menu.objects.select_for_update(of=('self',)).get(name=request.data['menu'])
                 except Menu.DoesNotExist:
                     return Http404()
                 if count > menu_obj.stock:
@@ -46,7 +46,7 @@ class OrderViewSet(viewsets.ModelViewSet):
                 menu_obj.stock -= count
                 menu_obj.save()
                 # 포인트 차감
-                user_obj = User.objects.select_for_update(of=('self')).get(id=request.user.id)
+                user_obj = User.objects.select_for_update(of=('self',)).get(id=request.user.id)
                 if count * menu_obj.price > user_obj.coffee_point:
                     raise ValidationError(detail="no_points", code="no_points")
                 user_obj.coffee_point -= (count * menu_obj.price)

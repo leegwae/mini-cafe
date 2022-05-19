@@ -50,6 +50,7 @@ services:
     depends_on:
       - redis
       - db
+    env_file: .env
 
   celery_beat:
     build: .
@@ -58,3 +59,4 @@ services:
     command: celery -A config beat --loglevel=info
     depends_on:
       - redis
+    env_file: .env
