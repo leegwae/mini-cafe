@@ -24,7 +24,7 @@ class MenuViewSet(viewsets.ModelViewSet):
 class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
-    queryset = order.Order.objects.all()
+    queryset = order.Order.objects.select_related('user', 'menu').all()
     serializer_class = order.OrderSerializer
 
     def create(self, request, *args, **kwargs):

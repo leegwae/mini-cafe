@@ -30,8 +30,8 @@ def order_in_progress(order_dic):
 @shared_task
 def add_menu_stock_to_all():
     logger.info("메뉴 재고 추가중...")
-    menu_lst = menu.Menu.objects.select_for_update().all()
     with transaction.atomic():
+        menu_lst = list(menu.Menu.objects.select_for_update().all())
         for menu_obj in menu_lst:
             menu_obj.stock += STOCK_UPDATE_AMOUNT
         menu.Menu.objects.bulk_update(menu_lst, ['stock'])
@@ -41,9 +41,10 @@ def add_menu_stock_to_all():
 @shared_task
 def add_user_point_to_all():
     logger.info("유저 포인트 추가중...")
-    user_lst = User.objects.select_for_update().all()
     with transaction.atomic():
+        user_lst = list(User.objects.select_for_update().all())
         for user_obj in user_lst:
             user_obj.coffee_point += POINT_UPDATE_AMOUNT
         User.objects.bulk_update(user_lst, ['coffee_point'])
+        time.sleep(60)
     logger.info("유저 포인트 추가 완료!")

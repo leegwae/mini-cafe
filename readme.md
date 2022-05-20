@@ -56,3 +56,19 @@
 * https://medium.com/@alexandre.laplante/djangos-select-for-update-with-examples-and-tests-caff09414766
 * https://techblog.woowahan.com/2547/
 * https://medium.com/@erayerdin/how-to-test-celery-in-django-927438757daf
+
+## 배운것
+트랜잭션을 설정해서 테이블 전체를 업데이트 할 경우 `SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;` 으로 설정되기 때문에 해당 테이블을 읽을 수 있고, 쓸 수도 있다.
+
+하지만 lock 이 걸린 테이블 행에 대해서는 동시에 UPDATE 요청이 들어와도 무시되며, 모든 처리가 완료되어 트랜잭션이 끝난 후에 해당 UPDATE 요청이 수행된다.
+
+즉, 전체 유저 포인트 업데이트 수행 시 1,2,3 유저가 업데이트 진행 중일 때 다음과 같은 경우가 있다.
+
+1. SELECT 로 업데이트 이전의 포인트 읽기
+2. INSERT 로 4번 유저 추가하기 (4번 유저는 포인트 업데이트가 되지 않는다)
+3. DELETE/UPDATE 로 1,2,3 번 유저 수행하기
+   1. 트랜잭션이 진행중이기 때문에 처리는 지연된다. 즉, 아무리 많은 요청을 보내도 쌓여있는다.
+   2. 트랜잭션이 완료가 되어 포인트는 +10000 으로 업데이트 된다.
+   3. 지연된 요청이 처리된다. 이때 요청의 수행시간은 기다린 시간만큼이다. 
+   
+      (39.477) UPDATE ... ,  (34.852) UPDATE ... ,  (25.310) UPDATE ... 처럼 같은 요청을 여러번 보낸만큼 쌓여있음.

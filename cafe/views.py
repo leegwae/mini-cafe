@@ -19,6 +19,6 @@ def index(request):
 
 @login_required
 def bot(request):
-    menus = menu.Menu.objects.all()
+    menus = list(menu.Menu.objects.all())
     menu_name = [m.get_name_display() for m in menus]
     return render(request, 'cafe/bot.html', {'menus':menu_name})
