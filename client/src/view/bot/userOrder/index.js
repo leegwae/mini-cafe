@@ -1,58 +1,48 @@
-import { removeChildren, setVisibility } from "../../../util/dom.js";
+import el, { removeChildren, setVisibility } from "../../../util/dom.js";
 import View from "../../abstract.js";
+import{ MENU } from '../const.js';
 
 export default class UserOrder extends View {
-	static #template = {
-		menu: `
+	static #template = `
 			<div class="order">
+				<ul class="menu-list"></ul>
 				<p id="total">
 					총 <span class="total-amount">0</span>잔
 					<button class="button" id="order-button">주문하기</button>
 					<button class="button" id="cancel-button">취소하기</button>
 				</p>
 			</div>
-		`,
-		point: `
-			<div class="order">
-				<p>현재 포인트는 <span id="point">0</span>점입니다.</p>
-			</div>`,
-	};
+		`;
 
 	buildItem = ({ name }) => `
-		<li id=${name}>
+		<li class="menu-item" id=${name}>
 			${name}
 			<span class="item-amount">0</span>잔
-			<span class="button plus" data-action="increase">+</span>
-			<span class="button minus" data-action="decrease">-</span>
+			<button class="button plus" data-action="increase">+</button>
+			<button class="button minus" data-action="decrease">-</button>
 		</li>
 	`;
 
 	constructor() {
 		super();
-		this.handlers = [['click', this.onCancel], ['click', this.onOrder], ['click', this.onAmountHandle]]
-	}
-
-	setContentByTemplateKey(key) {
-		if (key === this.dataset.content) return;
-		removeChildren(this);
-		this.dataset.content = key;
-		if (key === 'none') return;
-
-		this.insertAdjacentHTML('beforeend', UserOrder.#template[key]);
-
-		if (key !== 'menu') return;
-		const MENU = /* 비동기 작업 필요*/ ['아메리카노', '카페라떼', '마카롱', '얼그레이 스콘'];
+		const $content = el(UserOrder.#template);
+		const $menuList = $content.getElementsByClassName('menu-list')[0]
+		/* TODO: 메뉴 리스트 가져오는 비동기 작업 필요 */
 		MENU.forEach((menu) => {
-			this.getElementsByClassName('order')[0].insertAdjacentHTML('afterbegin', this.buildItem({ name: menu }))
+			$menuList.insertAdjacentHTML('beforeend', this.buildItem({ name: menu }))
 		})
+		this.handlers = [['click', this.onCancel], ['click', this.onOrder], ['click', this.onAmountHandle]];
+		this.render($content);
 	}
+
 	onCancel = (e) => {
 		e.preventDefault();
 
 		const tg = e.target;
 		if (tg.id !== 'cancel-button') return;
-		this.setContentByTemplateKey('none')
+		[...this.getElementsByTagName('button')].forEach((button) => button.disabled = true);
 	}
+
 	onOrder = (e) => {
 		e.preventDefault();
 

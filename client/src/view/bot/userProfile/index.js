@@ -1,6 +1,7 @@
 import el from "../../../util/dom.js";
 import View from "../../abstract.js";
 import '../userPoint/index.js';
+import '../userOrder/index.js';
 
 export default class UserProfile extends View {
 	static #template = `
@@ -25,7 +26,7 @@ export default class UserProfile extends View {
 
 		const tg = e.target;
 		if (tg.id !== 'display-menu-button') return;
-		this.parentElement.insertAdjacentElement('beforeend', el('<div>메뉴</div>'))
+		this.parentElement.insertAdjacentElement('beforeend', el('<user-order></user-order>'))
 	}
 
 	onPointDisplay(e) {

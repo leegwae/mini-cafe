@@ -2,6 +2,9 @@
 
 * { 
     font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
+}
+
+body {
     color: #191f28;
 }
 
@@ -19,7 +22,8 @@ button {
     border: none;
 }
 
-li {
+ul, li {
+    padding: 0;
     list-style: none;
 }
 
@@ -153,6 +157,10 @@ li {
 .bot .order{
     padding: 10px;
     background-color: #f7f7f7;
+}
+
+.bot button:disabled {
+    cursor: default;
 }
 
 /* 
