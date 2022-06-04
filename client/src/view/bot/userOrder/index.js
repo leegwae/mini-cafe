@@ -1,4 +1,4 @@
-import el, { removeChildren, setVisibility } from "../../../util/dom.js";
+import el, { setVisibility } from "../../../util/dom.js";
 import View from "../../abstract.js";
 import{ MENU } from '../const.js';
 
@@ -40,6 +40,7 @@ export default class UserOrder extends View {
 
 		const tg = e.target;
 		if (tg.id !== 'cancel-button') return;
+
 		[...this.getElementsByTagName('button')].forEach((button) => button.disabled = true);
 	}
 
@@ -48,16 +49,14 @@ export default class UserOrder extends View {
 
 		const tg = e.target;
 		if (tg.id !== 'order-button') return;
-
-		const total = Number(document.getElementsByClassName('total-amount')[0].textContent);
+		const total = Number(this.getElementsByClassName('total-amount')[0].textContent);
 		if (total === 0) {
 			window.alert('주문하실 메뉴를 골라주세요.');
 			return;
 		}
 		else window.alert(`총 ${total}잔을 주문합니다.`);
 	
-		[...tg.closest('div').getElementsByClassName('button')].forEach((button) => setVisibility(button, false));
-		document.getElementsByTagName('order-notice')[0].setContentByTemplateKey('error2');
+		[...this.getElementsByClassName('button')].forEach((button) => setVisibility(button, false));
 	}
 	onAmountHandle = (e) => {
 		e.preventDefault();
@@ -66,7 +65,7 @@ export default class UserOrder extends View {
 		if (tg.dataset.action !== 'increase' && tg.dataset.action !== 'decrease') return;
 		const { action } = tg.dataset;
 		const item = tg.closest('li');
-		const totalElem = document.getElementsByClassName('total-amount')[0];
+		const totalElem = this.getElementsByClassName('total-amount')[0];
 		const amountElem = item.getElementsByClassName('item-amount')[0];
 		let total = Number(totalElem.textContent);
 		let amount = Number(amountElem.textContent);
