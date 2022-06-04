@@ -161,6 +161,7 @@ ul, li {
 
 .bot button:disabled {
     cursor: default;
+    opacity: 1;
 }
 
 /* 

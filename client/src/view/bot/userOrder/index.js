@@ -1,6 +1,7 @@
 import el, { setVisibility } from "../../../util/dom.js";
 import View from "../../abstract.js";
 import{ MENU } from '../const.js';
+import '../orderNotice/index.js';
 
 export default class UserOrder extends View {
 	static #template = `
@@ -42,6 +43,7 @@ export default class UserOrder extends View {
 		if (tg.id !== 'cancel-button') return;
 
 		[...this.getElementsByTagName('button')].forEach((button) => button.disabled = true);
+		this.parentElement.insertAdjacentElement('beforeend', el('<user-profile></user-profile>'))
 	}
 
 	onOrder = (e) => {
@@ -57,6 +59,10 @@ export default class UserOrder extends View {
 		else window.alert(`총 ${total}잔을 주문합니다.`);
 	
 		[...this.getElementsByClassName('button')].forEach((button) => setVisibility(button, false));
+		const notice = el('<order-notice></order-notice>');
+		this.parentElement.insertAdjacentElement('beforeend', notice);
+		/* TODO: 주문에 따라 대기 상태 받아오는 비동기 작업 필요 */
+		notice.setContentByTemplateKey('error2');
 	}
 	onAmountHandle = (e) => {
 		e.preventDefault();

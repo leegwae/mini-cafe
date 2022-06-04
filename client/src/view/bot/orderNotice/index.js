@@ -1,5 +1,6 @@
 import View from "../../abstract.js";
-import el, { removeChildren, setVisibility } from "../../../util/dom.js";
+import el from "../../../util/dom.js";
+import '../userProfile/index.js';
 
 export default class OrderNotice extends View {
 	static #template = {
@@ -8,8 +9,8 @@ export default class OrderNotice extends View {
 				<p>이런, 지금은 커피 피크타임💦입니다.</p>
 				<p><span>다래</span>님의 주문이 완료될때까지 <span>12</span>분 남았습니다.</p>
 				<p>기다리시겠어요?
-						<button class="button" data-action="wait-order">기다리기</button>
-						<button class="button" data-action="cancel-order">취소하기</button>
+						<button class="button" data-action="wait-order-button">기다리기</button>
+						<button class="button" data-action="cancel-order-button">취소하기</button>
 				</p>
 			</div>
 		`,
@@ -32,11 +33,6 @@ export default class OrderNotice extends View {
 	}
 
 	setContentByTemplateKey(key) {
-		if (key === this.dataset.content) return;
-		removeChildren(this);
-		this.dataset.content = key;
-		if (key === 'none') return;
-
 		this.insertAdjacentHTML('beforeend', OrderNotice.#template[key]);
 	}
 
@@ -44,21 +40,21 @@ export default class OrderNotice extends View {
 		e.preventDefault();
 
 		const tg = e.target;
-		if (tg.dataset?.action !== "wait-order") return;
+		if (tg.dataset?.action !== "wait-order-button") return;
 
-		this.setContentByTemplateKey('order');
-		this.getElementsByClassName('total-amount')[0].textContent =
-			document.getElementById('total').getElementsByClassName('total-amount')[0].textContent;
+		[...this.getElementsByTagName('button')].forEach((button) => button.disabled = true);
+		/* /order(PATCH) 비동기 필요*/
 	}
 
 	onCancel(e) {
 		e.preventDefault();
 
 		const tg = e.target;
-		if (tg.dataset?.action !== 'cancel-order') return;
+		if (tg.dataset?.action !== 'cancel-order-button') return;
 
-		this.setContentByTemplateKey('none');
-		document.getElementsByTagName('user-order')[0].setContentByTemplateKey('none');
+		[...this.getElementsByTagName('button')].forEach((button) => button.disabled = true);
+		/* /order(DELETE) 비동기 필요*/
+		this.parentElement.insertAdjacentElement('beforeend', el('<user-profile></user-profile>'))
 	}
 }
 
