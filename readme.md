@@ -7,8 +7,8 @@
 
 ## 프로토타입 
 
-<img src="client/img/index.png" width="480px">
-<img src="client/img/bot.png" width="480px">
+<img src="img/index.png" width="480px">
+<img src="img/bot.png" width="480px">
 
 ## 요구사항
 

@@ -1,7 +1,7 @@
 import el from "../../../util/dom.js";
 import View from "../../abstract.js";
-import '../userPoint/index.js';
-import '../userOrder/index.js';
+import '../userPoint';
+import '../userOrder';
 
 export default class UserProfile extends View {
 	static #template = `

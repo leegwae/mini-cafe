@@ -1,8 +1,8 @@
 import el from "../../util/dom.js";
 import View from '../abstract.js';
-import './userProfile/index.js';
-import './userOrder/index.js';
-import './orderNotice/index.js';
+import './userProfile';
+import './userOrder';
+import './orderNotice';
 
 export default class Bot extends View {
 	static #template = `
