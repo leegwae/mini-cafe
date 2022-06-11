@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # third party
     'rest_framework',
     'drf_yasg',
+    'corsheaders',
     # custom app
     'accounts.apps.AccountsConfig',
     'cafe.apps.CafeConfig',
@@ -64,8 +65,8 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'client'],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -139,7 +140,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [ os.path.join('static'), ]
+STATICFILES_DIRS = [ 'client/static', ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -150,6 +151,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 """
 CUSTOM SETTINGS
 """
+
+# CORS
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"(?:https?:\/\/)127.0.0.1:*",
+    r"(?:https?:\/\/)localhost:*",
+]
 
 # Django User Auth
 AUTH_USER_MODEL = 'accounts.User'

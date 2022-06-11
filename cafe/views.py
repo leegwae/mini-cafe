@@ -14,11 +14,11 @@ def index(request):
         'coffee_stock': coffee_stock,
         'total_order': total_order
     }
-    return render(request, 'cafe/index.html', context)
+    return render(request, 'index.html', context)
 
 
 @login_required
 def bot(request):
     menus = list(menu.Menu.objects.all())
     menu_name = [m.get_name_display() for m in menus]
-    return render(request, 'cafe/bot.html', {'menus':menu_name})
+    return render(request, 'bot.html', {'menus':menu_name})

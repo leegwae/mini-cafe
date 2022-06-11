@@ -1,12 +1,14 @@
 ## 실행
-`docker-compose up` 실행 후 `django | Starting development server at http://0.0.0.0:8000/` 뜰때까지 기다리기.
+`docker-compose up` 실행 후 (에러가 나면 변경사항이 있다는 뜻이므로 `docker-compose up --build` 실행)
+
+`django | Starting development server at http://0.0.0.0:8000/` 뜰때까지 기다리기.
 
 회원가입 및 로그인 후 http://localhost:8000/api/ 또는 http://localhost:8000/swagger/ 에서 주문접수.
 
 ## 프로토타입 
 
-<img src="client/img/index.png" width="480px">
-<img src="client/img/bot.png" width="480px">
+<img src="img/index.png" width="480px">
+<img src="img/bot.png" width="480px">
 
 ## 요구사항
 
