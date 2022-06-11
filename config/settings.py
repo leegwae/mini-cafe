@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # third party
     'rest_framework',
     'drf_yasg',
+    'corsheaders',
     # custom app
     'accounts.apps.AccountsConfig',
     'cafe.apps.CafeConfig',
@@ -150,6 +151,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 """
 CUSTOM SETTINGS
 """
+
+# CORS
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"(?:https?:\/\/)127.0.0.1:*",
+    r"(?:https?:\/\/)localhost:*",
+]
 
 # Django User Auth
 AUTH_USER_MODEL = 'accounts.User'
