@@ -1,6 +1,6 @@
 import View from "../../abstract.js";
 import el from "../../../util/dom.js";
-import '../userProfile';
+import '../userProfile/index.js';
 
 export default class OrderNotice extends View {
 	static #template = {

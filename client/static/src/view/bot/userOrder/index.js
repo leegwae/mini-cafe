@@ -1,7 +1,7 @@
 import el, { setVisibility } from "../../../util/dom.js";
 import View from "../../abstract.js";
 import{ MENU } from '../const.js';
-import '../orderNotice';
+import '../orderNotice/index.js';
 
 export default class UserOrder extends View {
 	static #template = `
