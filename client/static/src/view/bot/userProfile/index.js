@@ -26,7 +26,10 @@ export default class UserProfile extends View {
 
 		const tg = e.target;
 		if (tg.id !== 'display-menu-button') return;
-		this.parentElement.insertAdjacentElement('beforeend', el('<user-order></user-order>'))
+
+		const menuEl = el('<user-order></user-order>');
+		this.parentElement.insertAdjacentElement('beforeend', menuEl);
+		menuEl.init();
 	}
 
 	onPointDisplay(e) {

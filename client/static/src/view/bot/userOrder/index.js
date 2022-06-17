@@ -3,6 +3,8 @@ import View from "../../abstract.js";
 import{ MENU } from '../const.js';
 import '../orderNotice/index.js';
 
+import { getMenu } from "../../../api/menu.js";
+
 export default class UserOrder extends View {
 	static #template = `
 			<div class="order">
@@ -27,13 +29,17 @@ export default class UserOrder extends View {
 	constructor() {
 		super();
 		const $content = el(UserOrder.#template);
-		const $menuList = $content.getElementsByClassName('menu-list')[0]
-		/* TODO: 메뉴 리스트 가져오는 비동기 작업 필요 */
-		MENU.forEach((menu) => {
-			$menuList.insertAdjacentHTML('beforeend', this.buildItem({ name: menu }))
-		})
 		this.handlers = [['click', this.onCancel], ['click', this.onOrder], ['click', this.onAmountHandle]];
 		this.render($content);
+	}
+
+	async init() {
+		const wrapper = this.getElementsByClassName('menu-list')[0];
+		const menu = await getMenu();
+		menu.forEach((menuItem) => {
+			const { name } = menuItem;
+			wrapper.insertAdjacentHTML('beforebegin', this.buildItem({ name }));
+		});
 	}
 
 	onCancel = (e) => {
